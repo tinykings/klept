@@ -370,7 +370,7 @@ function App() {
             onClick={() => setIsFormExpanded(true)}
             className="w-full bg-white p-4 rounded-xl border border-dashed border-gray-300 text-gray-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50 transition-all flex items-center justify-center gap-2 mb-8 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700/50 dark:hover:text-indigo-400 dark:hover:border-indigo-700"
           >
-            Take it for yourself, you deserve it...
+            Steal a link, you deserve it...
           </button>
         ) : (
           <form ref={formRef} onSubmit={handleAddBookmark} className="bg-white p-6 rounded-xl border shadow-sm mb-8 relative dark:bg-gray-800 dark:border-gray-700">
