@@ -329,7 +329,7 @@ function App() {
             className="text-4xl font-bold flex items-center gap-4 cursor-pointer hover:text-indigo-600 transition-colors"
             onClick={() => window.location.href = window.location.origin + window.location.pathname}
           >
-            <img src="logo.png" alt="Klept Logo" className="h-16 w-16 rounded-full" />
+            <img src="logo.png" alt="Klept Logo" className="h-16 w-16 rounded-full dark:invert" />
             Klept
           </h1>
           <div className="flex items-center gap-2">
@@ -489,7 +489,7 @@ function App() {
               <div 
                 key={bookmark.id} 
                 onClick={() => window.location.href = bookmark.url}
-                className="bg-white p-4 rounded-lg border shadow-sm hover:shadow-md hover:bg-gray-50 transition-all flex items-center justify-between group cursor-pointer dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 dark:hover:border-gray-600"
+                className="bg-white p-4 rounded-lg border shadow-sm hover:shadow-md hover:bg-amber-50 hover:border-amber-300 transition-all flex items-center justify-between group cursor-pointer dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-amber-900/20 dark:hover:border-amber-700"
               >
                 <div className="flex-1 min-w-0">
                   <h3 className="font-medium truncate group-hover:text-indigo-600 transition-colors block dark:text-gray-100 dark:group-hover:text-indigo-400">
