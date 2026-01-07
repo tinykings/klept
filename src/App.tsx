@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Settings as SettingsIcon, RefreshCw, Pin, Github, Cloud, CloudOff, CheckCircle, Tag, X, Moon, Sun, Monitor } from 'lucide-react';
+import { Plus, Trash2, Settings as SettingsIcon, RefreshCw, Pin, Github, Cloud, CloudOff, CheckCircle, Tag, X, Moon, Sun, Monitor, Bookmark as BookmarkIcon } from 'lucide-react';
 import type { 
   Bookmark, 
   Settings,
@@ -49,11 +49,24 @@ function App() {
     setBookmarks(localBookmarks);
     setSettings(localSettings);
 
-    // Check URL params for tag
+    // Check URL params
     const params = new URLSearchParams(window.location.search);
+    
+    // Tag filtering
     const tagParam = params.get('tag');
     if (tagParam) {
       setSelectedTag(tagParam);
+    }
+
+    // Bookmarklet / Quick Add support
+    const action = params.get('action');
+    const urlParam = params.get('url');
+    const titleParam = params.get('title');
+
+    if (action === 'add' && urlParam) {
+      setNewUrl(urlParam);
+      if (titleParam) setNewTitle(titleParam);
+      setIsFormExpanded(true);
     }
 
     if (localSettings.gistId && localSettings.githubToken) {
@@ -563,6 +576,21 @@ function App() {
                     System
                   </button>
                 </div>
+              </div>
+
+              <div className="border-t pt-4 dark:border-gray-800">
+                <h3 className="font-medium mb-3 flex items-center gap-2 dark:text-gray-200">
+                  <BookmarkIcon size={18} />
+                  Bookmarklet
+                </h3>
+                <p className="text-sm text-gray-500 mb-2 dark:text-gray-400">
+                  Drag this link to your bookmarks bar to quickly add sites to Klept:
+                </p>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: `<a href="javascript:(function(){window.location.href='${window.location.origin}${window.location.pathname}?action=add&url='+encodeURIComponent(window.location.href)+'&title='+encodeURIComponent(document.title)})()" class="inline-block px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm font-medium text-indigo-600 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-indigo-400 dark:hover:bg-gray-700 cursor-grab active:cursor-grabbing" onclick="event.preventDefault()">Add to Klept</a>`
+                  }}
+                />
               </div>
 
               <div className="border-t pt-4 dark:border-gray-800">
