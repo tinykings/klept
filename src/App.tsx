@@ -324,11 +324,12 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 font-sans dark:bg-gray-900 dark:text-gray-100 transition-colors duration-200">
       <header className="bg-white border-b sticky top-0 z-10 dark:bg-gray-900 dark:border-gray-800">
-        <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-4 h-24 flex items-center justify-between">
           <h1 
-            className="text-xl font-bold flex items-center gap-2 cursor-pointer hover:text-indigo-600 transition-colors"
+            className="text-4xl font-bold flex items-center gap-4 cursor-pointer hover:text-indigo-600 transition-colors"
             onClick={() => window.location.href = window.location.origin + window.location.pathname}
           >
+            <img src="/logo.png" alt="Klept Logo" className="h-16 w-16 rounded-full" />
             Klept
           </h1>
           <div className="flex items-center gap-2">
