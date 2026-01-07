@@ -196,7 +196,9 @@ function App() {
     );
 
     if (selectedTag) {
-      filtered = filtered.filter(b => b.tags?.includes(selectedTag));
+      return filtered
+        .filter(b => b.tags?.includes(selectedTag))
+        .sort((a, b) => a.title.localeCompare(b.title));
     }
 
     const pinned = filtered.filter(b => b.pinned).sort((a, b) => a.title.localeCompare(b.title));
@@ -314,7 +316,10 @@ function App() {
     <div className="min-h-screen bg-gray-100 text-gray-900 font-sans dark:bg-gray-900 dark:text-gray-100 transition-colors duration-200">
       <header className="bg-white border-b sticky top-0 z-10 dark:bg-gray-900 dark:border-gray-800">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-          <h1 className="text-xl font-bold flex items-center gap-2">
+          <h1 
+            className="text-xl font-bold flex items-center gap-2 cursor-pointer hover:text-indigo-600 transition-colors"
+            onClick={() => window.location.href = window.location.origin + window.location.pathname}
+          >
             Klept
           </h1>
           <div className="flex items-center gap-2">
@@ -368,9 +373,9 @@ function App() {
         {!isFormExpanded ? (
           <button
             onClick={() => setIsFormExpanded(true)}
-            className="w-full bg-white p-4 rounded-xl border border-dashed border-gray-300 text-gray-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50 transition-all flex items-center justify-center gap-2 mb-8 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700/50 dark:hover:text-indigo-400 dark:hover:border-indigo-700"
+            className="w-full bg-white p-4 rounded-xl border border-dashed border-gray-300 text-gray-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50 transition-all flex items-center justify-center gap-2 mb-8 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700/50 dark:hover:text-indigo-400 dark:hover:border-indigo-700 cursor-pointer"
           >
-            Steal a link, you deserve it...
+            Steal a link, you deserve it
           </button>
         ) : (
           <form ref={formRef} onSubmit={handleAddBookmark} className="bg-white p-6 rounded-xl border shadow-sm mb-8 relative dark:bg-gray-800 dark:border-gray-700">
