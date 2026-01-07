@@ -329,7 +329,7 @@ function App() {
             className="text-4xl font-bold flex items-center gap-4 cursor-pointer hover:text-indigo-600 transition-colors"
             onClick={() => window.location.href = window.location.origin + window.location.pathname}
           >
-            <img src="/logo.png" alt="Klept Logo" className="h-16 w-16 rounded-full" />
+            <img src="logo.png" alt="Klept Logo" className="h-16 w-16 rounded-full" />
             Klept
           </h1>
           <div className="flex items-center gap-2">
