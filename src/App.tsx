@@ -333,7 +333,7 @@ function App() {
             Klept
           </h1>
           <div className="flex items-center gap-2">
-            <div className="flex items-center mr-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center mr-2 text-sm text-gray-500 dark:text-gray-400 dark:opacity-80">
               {syncStatus === 'syncing' && (
                 <span className="flex items-center gap-1 text-indigo-600 dark:text-indigo-400">
                   <RefreshCw size={14} className="animate-spin" />
@@ -362,14 +362,14 @@ function App() {
               href="https://github.com/tinykings"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors dark:hover:bg-gray-800"
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors dark:hover:bg-gray-800 dark:opacity-80"
               title="GitHub"
             >
               <Github size={20} />
             </a>
             <button
               onClick={() => setIsSettingsOpen(true)}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors dark:hover:bg-gray-800"
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors dark:hover:bg-gray-800 dark:opacity-80"
               title="Settings"
             >
               <SettingsIcon size={20} />
