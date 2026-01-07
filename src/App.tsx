@@ -436,6 +436,7 @@ function App() {
         <div className="mb-4">
           <input
             ref={searchInputRef}
+            autoFocus
             type="text"
             placeholder="Search bookmarks..."
             className="w-full px-4 py-2 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-500"
