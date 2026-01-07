@@ -4,11 +4,13 @@ export interface Bookmark {
   url: string;
   createdAt: number;
   pinned?: boolean;
+  tags?: string[];
 }
 
 export interface Settings {
   gistId: string;
   githubToken: string;
+  theme?: 'light' | 'dark' | 'system';
 }
 
 const STORAGE_KEY = 'klept_bookmarks';
@@ -25,7 +27,7 @@ export const saveBookmarks = (bookmarks: Bookmark[]) => {
 
 export const getSettings = (): Settings => {
   const data = localStorage.getItem(SETTINGS_KEY);
-  return data ? JSON.parse(data) : { gistId: '', githubToken: '' };
+  return data ? JSON.parse(data) : { gistId: '', githubToken: '', theme: 'system' };
 };
 
 export const saveSettings = (settings: Settings) => {
