@@ -315,7 +315,6 @@ function App() {
       <header className="bg-white border-b sticky top-0 z-10 dark:bg-gray-900 dark:border-gray-800">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
           <h1 className="text-xl font-bold flex items-center gap-2">
-            <span className="bg-indigo-600 text-white p-1 rounded">Kl</span>
             Klept
           </h1>
           <div className="flex items-center gap-2">
@@ -371,8 +370,7 @@ function App() {
             onClick={() => setIsFormExpanded(true)}
             className="w-full bg-white p-4 rounded-xl border border-dashed border-gray-300 text-gray-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50 transition-all flex items-center justify-center gap-2 mb-8 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700/50 dark:hover:text-indigo-400 dark:hover:border-indigo-700"
           >
-            <Plus size={20} />
-            Add New Bookmark
+            Take it for yourself, you deserve it...
           </button>
         ) : (
           <form ref={formRef} onSubmit={handleAddBookmark} className="bg-white p-6 rounded-xl border shadow-sm mb-8 relative dark:bg-gray-800 dark:border-gray-700">
@@ -475,7 +473,7 @@ function App() {
               <div 
                 key={bookmark.id} 
                 onClick={() => window.location.href = bookmark.url}
-                className="bg-white p-4 rounded-lg border shadow-sm hover:shadow-md transition-shadow flex items-center justify-between group cursor-pointer dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-600"
+                className="bg-white p-4 rounded-lg border shadow-sm hover:shadow-md hover:bg-gray-50 transition-all flex items-center justify-between group cursor-pointer dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 dark:hover:border-gray-600"
               >
                 <div className="flex-1 min-w-0">
                   <h3 className="font-medium truncate group-hover:text-indigo-600 transition-colors block dark:text-gray-100 dark:group-hover:text-indigo-400">
