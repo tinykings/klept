@@ -161,8 +161,17 @@ function App() {
     setSyncStatus('syncing');
     try {
       const remote = await syncFromGist(currentSettings);
-      setBookmarks(remote);
-      saveBookmarks(remote);
+      const local = getBookmarks();
+
+      if (remote.length === 0 && local.length > 0) {
+        // If Gist is empty but we have local bookmarks, assume first sync and push local to Gist
+        await syncToGist(local, currentSettings);
+      } else {
+        // Otherwise, pull from Gist (Gist wins)
+        setBookmarks(remote);
+        saveBookmarks(remote);
+      }
+      
       setSyncStatus('success');
       setTimeout(() => setSyncStatus('idle'), 3000);
     } catch (e) {
