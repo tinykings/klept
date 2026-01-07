@@ -358,6 +358,15 @@ function App() {
                 </span>
               )}
             </div>
+            <a
+              href="https://github.com/tinykings"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors dark:hover:bg-gray-800"
+              title="GitHub"
+            >
+              <Github size={20} />
+            </a>
             <button
               onClick={() => setIsSettingsOpen(true)}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors dark:hover:bg-gray-800"
@@ -516,7 +525,7 @@ function App() {
                     }}
                     className={`p-2 rounded-md transition-all ${
                       bookmark.pinned 
-                        ? 'text-yellow-500 bg-yellow-50 hover:bg-yellow-100 dark:bg-yellow-900/30 dark:hover:bg-yellow-900/50' 
+                        ? 'text-pink-400 bg-pink-50 hover:bg-pink-100 dark:text-pink-400 dark:bg-pink-900/30 dark:hover:bg-pink-900/50' 
                         : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300'
                     }`}
                     title={bookmark.pinned ? "Unpin" : "Pin to top"}
