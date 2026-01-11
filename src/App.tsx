@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Settings as SettingsIcon, RefreshCw, Pin, Github, Cloud, CloudOff, CheckCircle, Tag, X, Moon, Sun, Monitor, Bookmark as BookmarkIcon } from 'lucide-react';
+import { Plus, Trash2, Settings as SettingsIcon, RefreshCw, Pin, Github, Cloud, CloudOff, CheckCircle, Tag, X, Moon, Sun, Monitor, Bookmark as BookmarkIcon, Pencil } from 'lucide-react';
 import type { 
   Bookmark, 
   Settings,
@@ -17,6 +17,8 @@ function App() {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const [settings, setSettings] = useState<Settings>({ gistId: '', githubToken: '', theme: 'system' });
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [editingBookmark, setEditingBookmark] = useState<Bookmark | null>(null);
+  const [editTagsString, setEditTagsString] = useState('');
   const [newTitle, setNewTitle] = useState('');
   const [newUrl, setNewUrl] = useState('');
   const [newTags, setNewTags] = useState('');
@@ -298,8 +300,24 @@ function App() {
   };
 
   const handleDeleteBookmark = (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this bookmark?')) return;
     const updated = bookmarks.filter(b => b.id !== id);
     updateBookmarks(updated);
+  };
+
+  const handleUpdateBookmark = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingBookmark) return;
+    
+    const tagsList = editTagsString.split(',').map(t => t.trim()).filter(t => t.length > 0);
+    const updatedBookmark = { ...editingBookmark, tags: tagsList };
+
+    const updated = bookmarks.map(b => 
+      b.id === updatedBookmark.id ? updatedBookmark : b
+    );
+    updateBookmarks(updated);
+    setEditingBookmark(null);
+    showMessage('Bookmark updated!');
   };
 
   const handleTogglePin = (id: string) => {
@@ -501,9 +519,17 @@ function App() {
                 className="bg-white p-4 rounded-lg border shadow-sm hover:shadow-md hover:bg-amber-50 hover:border-amber-300 transition-all flex items-center justify-between group cursor-pointer dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-amber-900/20 dark:hover:border-amber-700"
               >
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-medium truncate group-hover:text-indigo-600 transition-colors block dark:text-gray-100 dark:group-hover:text-indigo-400">
-                    {bookmark.title}
-                  </h3>
+                  <div className="flex items-center gap-2">
+                    <img 
+                      src={`https://www.google.com/s2/favicons?domain=${(() => { try { return new URL(bookmark.url).hostname } catch { return '' } })()}&sz=32`}
+                      alt=""
+                      className="w-4 h-4 rounded-sm"
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }} 
+                    />
+                    <h3 className="font-medium truncate group-hover:text-indigo-600 transition-colors block dark:text-gray-100 dark:group-hover:text-indigo-400">
+                      {bookmark.title}
+                    </h3>
+                  </div>
                   <div className="flex items-center gap-2 mt-1">
                     <p className="text-sm text-gray-500 truncate dark:text-gray-400">{bookmark.url}</p>
                     {bookmark.tags && bookmark.tags.length > 0 && (
@@ -517,7 +543,18 @@ function App() {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-3 ml-4">
+                <div className="flex items-center gap-1 ml-4">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setEditingBookmark(bookmark);
+                      setEditTagsString(bookmark.tags?.join(', ') || '');
+                    }}
+                    className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-all dark:hover:bg-indigo-900/30 dark:hover:text-indigo-400"
+                    title="Edit"
+                  >
+                    <Pencil size={18} />
+                  </button>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -659,6 +696,64 @@ function App() {
                   className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors dark:bg-indigo-600 dark:hover:bg-indigo-500"
                 >
                   Save Settings
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {editingBookmark && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 dark:bg-gray-900 dark:border dark:border-gray-800">
+            <h2 className="text-xl font-bold mb-4 dark:text-white">Edit Bookmark</h2>
+            <form onSubmit={handleUpdateBookmark} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">URL</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  value={editingBookmark.url}
+                  onChange={(e) => setEditingBookmark({ ...editingBookmark, url: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Title</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  value={editingBookmark.title}
+                  onChange={(e) => setEditingBookmark({ ...editingBookmark, title: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Tags (comma separated)</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  value={editTagsString}
+                  onChange={(e) => setEditTagsString(e.target.value)}
+                  list="edit-tags-list"
+                />
+                <datalist id="edit-tags-list">
+                  {allTags.map(tag => (
+                    <option key={tag} value={tag} />
+                  ))}
+                </datalist>
+              </div>
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setEditingBookmark(null)}
+                  className="flex-1 px-4 py-2 border rounded-md hover:bg-gray-50 transition-colors dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+                >
+                  Save
                 </button>
               </div>
             </form>
