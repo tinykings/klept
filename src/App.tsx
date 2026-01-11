@@ -516,7 +516,7 @@ function App() {
               <div 
                 key={bookmark.id} 
                 onClick={() => window.location.href = bookmark.url}
-                className="bg-white p-4 rounded-lg border shadow-sm hover:shadow-md hover:bg-amber-50 hover:border-amber-300 transition-all flex items-center justify-between group cursor-pointer dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-amber-900/20 dark:hover:border-amber-700"
+                className="bg-white p-4 rounded-lg border shadow-sm hover:shadow-md hover:bg-indigo-50 hover:border-indigo-300 transition-all flex items-center justify-between group cursor-pointer dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-indigo-900/20 dark:hover:border-indigo-700"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
@@ -562,8 +562,8 @@ function App() {
                     }}
                     className={`p-2 rounded-md transition-all ${
                       bookmark.pinned 
-                        ? 'text-pink-400 bg-pink-50 hover:bg-pink-100 dark:text-pink-400 dark:bg-pink-900/30 dark:hover:bg-pink-900/50' 
-                        : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300'
+                        ? 'text-indigo-600 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-400 dark:bg-indigo-900/30 dark:hover:bg-indigo-900/50' 
+                        : 'text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 dark:hover:text-indigo-400'
                     }`}
                     title={bookmark.pinned ? "Unpin" : "Pin to top"}
                   >
