@@ -1,5 +1,4 @@
 <p align="center">
-<img src="public/logo.png" alt="Klept logo" width="120" />
 </p>
 
 <h1 align="center">Klept</h1>
@@ -10,5 +9,6 @@
 <h4 align="center">
 Local browser storage is used, or a Gist can be created for sync between devices. 
 </h4>
+
 
 
