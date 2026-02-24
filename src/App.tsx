@@ -138,6 +138,14 @@ function App() {
              window.location.href = sorted[0].url;
            }
         }
+        if (/^[1-9]$/.test(e.key) && document.activeElement === searchInputRef.current) {
+          const sorted = getSortedBookmarks();
+          const target = sorted[parseInt(e.key) - 1];
+          if (target) {
+            e.preventDefault();
+            window.location.href = target.url;
+          }
+        }
         return;
       }
 
@@ -498,6 +506,13 @@ function App() {
           </div>
         )}
 
+        {/* Search hints */}
+        {searchQuery.trim() && sortedBookmarks.length > 0 && (
+          <p className="mb-3 font-mono text-xs text-paper-muted dark:text-ink-muted">
+            <span className="opacity-70">↵ opens first result · 1–9 opens by number</span>
+          </p>
+        )}
+
         {/* Bookmark list */}
         <div className="space-y-1.5">
           {sortedBookmarks.length === 0 ? (
@@ -517,6 +532,12 @@ function App() {
                 style={{ animationDelay: `${0.04 * Math.min(i, 15)}s` }}
               >
                 <div className="flex-1 min-w-0 flex items-center gap-3">
+                  {/* Number badge */}
+                  {searchQuery.trim() && i < 9 && (
+                    <span className="font-mono text-xs text-paper-subtle dark:text-ink-ghost w-4 text-center shrink-0 select-none">
+                      {i + 1}
+                    </span>
+                  )}
                   {/* Favicon */}
                   <img
                     src={`https://www.google.com/s2/favicons?domain=${getDomain(bookmark.url)}&sz=32`}
