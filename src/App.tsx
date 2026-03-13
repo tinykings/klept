@@ -689,25 +689,29 @@ function App() {
                 </h3>
                 <div className="space-y-3">
                   <div>
+                    <label className="block text-xs font-medium text-paper-subtle mb-1 dark:text-ink-ghost">Gist ID</label>
+                    <input
+                      type="text"
+                      name="username"
+                      autoComplete="username"
+                      className="w-full px-3 py-2 bg-paper-dim border border-paper-border rounded-md text-sm font-mono focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber dark:bg-ink-lighter dark:border-ink-border dark:text-paper dark:placeholder-ink-muted"
+                      placeholder="5d53f..."
+                      value={settings.gistId}
+                      onChange={(e) => setSettings({ ...settings, gistId: e.target.value })}
+                    />
+                  </div>
+                  <div>
                     <label className="block text-xs font-medium text-paper-subtle mb-1 dark:text-ink-ghost">Access Token</label>
                     <input
                       type="password"
+                      name="password"
+                      autoComplete="current-password"
                       className="w-full px-3 py-2 bg-paper-dim border border-paper-border rounded-md text-sm font-mono focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber dark:bg-ink-lighter dark:border-ink-border dark:text-paper dark:placeholder-ink-muted"
                       placeholder="ghp_..."
                       value={settings.githubToken}
                       onChange={(e) => setSettings({ ...settings, githubToken: e.target.value })}
                     />
                     <p className="text-[10px] font-mono text-paper-muted mt-1 dark:text-ink-muted">Requires gist scope</p>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-paper-subtle mb-1 dark:text-ink-ghost">Gist ID</label>
-                    <input
-                      type="text"
-                      className="w-full px-3 py-2 bg-paper-dim border border-paper-border rounded-md text-sm font-mono focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber dark:bg-ink-lighter dark:border-ink-border dark:text-paper dark:placeholder-ink-muted"
-                      placeholder="5d53f..."
-                      value={settings.gistId}
-                      onChange={(e) => setSettings({ ...settings, gistId: e.target.value })}
-                    />
                   </div>
                 </div>
               </div>
