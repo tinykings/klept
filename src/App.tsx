@@ -109,7 +109,8 @@ function App() {
   }, [isFormExpanded]);
 
   const handleTagClick = (tag: string) => {
-    const nextTag = selectedTag === tag ? null : tag;
+    const lowerTag = tag.toLowerCase();
+    const nextTag = selectedTag?.toLowerCase() === lowerTag ? null : lowerTag;
     setSelectedTag(nextTag);
 
     const newUrl = new URL(window.location.href);
@@ -123,7 +124,7 @@ function App() {
 
   const getAllTags = () => {
     const tags = new Set<string>();
-    bookmarks.forEach(b => b.tags?.forEach(t => tags.add(t)));
+    bookmarks.forEach(b => b.tags?.forEach(t => tags.add(t.toLowerCase())));
     return Array.from(tags).sort();
   };
 
@@ -133,6 +134,10 @@ function App() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
         if (e.key === 'Enter' && document.activeElement === searchInputRef.current) {
+           if (e.ctrlKey || e.metaKey) {
+             window.location.href = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+             return;
+           }
            const sorted = getSortedBookmarks();
            if (sorted.length > 0) {
              window.location.href = sorted[0].url;
@@ -205,8 +210,9 @@ function App() {
     );
 
     if (selectedTag) {
+      const lowerSelectedTag = selectedTag.toLowerCase();
       return filtered
-        .filter(b => b.tags?.includes(selectedTag))
+        .filter(b => b.tags?.some(t => t.toLowerCase() === lowerSelectedTag))
         .sort((a, b) => a.title.localeCompare(b.title));
     }
 
@@ -261,7 +267,7 @@ function App() {
 
       const tagsList = newTags
         .split(',')
-        .map(t => t.trim())
+        .map(t => t.trim().toLowerCase())
         .filter(t => t.length > 0);
 
       const newBookmark: Bookmark = {
@@ -298,7 +304,7 @@ function App() {
     e.preventDefault();
     if (!editingBookmark) return;
 
-    const tagsList = editTagsString.split(',').map(t => t.trim()).filter(t => t.length > 0);
+    const tagsList = editTagsString.split(',').map(t => t.trim().toLowerCase()).filter(t => t.length > 0);
     const updatedBookmark = { ...editingBookmark, tags: tagsList };
 
     const updated = bookmarks.map(b =>
@@ -507,9 +513,9 @@ function App() {
         )}
 
         {/* Search hints */}
-        {searchQuery.trim() && sortedBookmarks.length > 0 && (
-          <p className="mb-3 font-mono text-xs text-paper-muted dark:text-ink-muted">
-            <span className="opacity-70">↵ opens first result · 1–9 opens by number</span>
+        {searchQuery.trim() && (
+          <p className="mb-3 font-mono text-xs text-paper-muted dark:text-ink-muted animate-fade-in">
+            <span className="opacity-70">Enter to open top result, numbers to open specific item, ctrl+enter to web search</span>
           </p>
         )}
 
