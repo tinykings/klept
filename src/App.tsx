@@ -134,11 +134,11 @@ function App() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
         if (e.key === 'Enter' && document.activeElement === searchInputRef.current) {
-           if (e.ctrlKey || e.metaKey) {
+           const sorted = getSortedBookmarks();
+           if (e.ctrlKey || e.metaKey || (searchQuery.trim() && sorted.length === 0)) {
              window.location.href = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
              return;
            }
-           const sorted = getSortedBookmarks();
            if (sorted.length > 0) {
              window.location.href = sorted[0].url;
            }
@@ -515,7 +515,11 @@ function App() {
         {/* Search hints */}
         {searchQuery.trim() && (
           <p className="mb-3 font-mono text-xs text-paper-muted dark:text-ink-muted animate-fade-in">
-            <span className="opacity-70">Enter to open top result, numbers to open specific item, ctrl+enter to web search</span>
+            <span className="opacity-70">
+              {sortedBookmarks.length > 0 
+                ? 'Enter to open top result, numbers to open specific item, ctrl+enter to web search'
+                : 'Enter to web search'}
+            </span>
           </p>
         )}
 
