@@ -135,8 +135,14 @@ function App() {
       if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
         if (e.key === 'Enter' && document.activeElement === searchInputRef.current) {
            const sorted = getSortedBookmarks();
-           if (e.ctrlKey || e.metaKey || (searchQuery.trim() && sorted.length === 0)) {
-             window.location.href = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+           const query = searchQuery.trim();
+           if (e.ctrlKey || e.metaKey || (query && sorted.length === 0)) {
+             if (isUrlLike(query)) {
+               const url = query.startsWith('http') ? query : `https://${query}`;
+               window.location.href = url;
+             } else {
+               window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+             }
              return;
            }
            if (sorted.length > 0) {
@@ -336,6 +342,21 @@ function App() {
     try { return new URL(url).hostname.replace('www.', ''); } catch { return ''; }
   };
 
+  const isUrlLike = (query: string) => {
+    const q = query.trim();
+    if (!q) return false;
+    if (q.includes(' ')) return false;
+    if (q.startsWith('http://') || q.startsWith('https://')) return true;
+    
+    // Check for TLD-like structure (e.g., example.com, example.net)
+    const tldRegex = /^[a-zA-Z0-0][a-zA-Z0-9-]*[a-zA-Z0-0]\.[a-zA-Z]{2,}$/;
+    if (tldRegex.test(q)) return true;
+
+    // More comprehensive domain check
+    const domainRegex = /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i;
+    return domainRegex.test(q);
+  };
+
   const sortedBookmarks = getSortedBookmarks();
 
   return (
@@ -517,8 +538,8 @@ function App() {
           <p className="mb-3 font-mono text-xs text-paper-muted dark:text-ink-muted animate-fade-in">
             <span className="opacity-70">
               {sortedBookmarks.length > 0 
-                ? 'Enter to open top result, numbers to open specific item, ctrl+enter to web search'
-                : 'Enter to web search'}
+                ? `Enter to open top result, numbers to open specific item, ctrl+enter to ${isUrlLike(searchQuery) ? 'open site' : 'web search'}`
+                : `Enter to ${isUrlLike(searchQuery) ? 'open site' : 'web search'}`}
             </span>
           </p>
         )}
