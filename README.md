@@ -5,6 +5,7 @@
 <h1 align="center">Klept</h1>
 
 <h3 align="center">A minimalist, self-hosted bookmark manager.</h3>
+<p align="center"><a href="https://tinykings.github.io/klept/">https://tinykings.github.io/klept/</a></p>
 
 <p align="center">
   <a href="#features">Features</a> •
